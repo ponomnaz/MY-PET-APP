@@ -125,7 +125,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
               disabled={loading}
               className="w-full text-left px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 transition-colors text-sm disabled:opacity-50"
             >
-              <span className="font-medium">👤 Тестовый Пользователь</span>
+              <span className="font-medium">👤 Неверный Пользователь</span>
               <br />
               <span className="text-xs text-gray-600">test@example.com / test123</span>
             </button>

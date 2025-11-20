@@ -29,7 +29,6 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             onClick={onClose}
             className="lg:hidden text-white hover:text-gray-300"
           >
-            ✕
           </button>
         </div>
         

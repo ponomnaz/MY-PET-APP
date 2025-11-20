@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { mockLogin, setAuthToken } from '../utils/auth';
 
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
 interface LoginProps {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (user: User) => void;
 }
 
 const Login = ({ onLoginSuccess }: LoginProps) => {
@@ -19,7 +25,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
     try {
       const response = await mockLogin(email, password);
       setAuthToken(response.token);
-      onLoginSuccess();
+      onLoginSuccess(response.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Произошла ошибка');
     } finally {
@@ -37,7 +43,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
     try {
       const response = await mockLogin(testEmail, testPassword);
       setAuthToken(response.token);
-      onLoginSuccess();
+      onLoginSuccess(response.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Произошла ошибка');
     } finally {

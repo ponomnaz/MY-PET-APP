@@ -13,7 +13,8 @@ interface AuthResponse {
 // База данных пользователей (только эти могут войти)
 const MOCK_USERS = [
   { id: '1', email: 'admin@example.com', password: 'admin123', name: 'Администратор' },
-  { id: '2', email: 'user@example.com', password: 'user123', name: 'Пользователь' }
+  { id: '2', email: 'user@example.com', password: 'user123', name: 'Пользователь' },
+  { id: '3', email: 'nazar@example.com', password: 'nazar123', name: 'Назар' }
 ];
 
 // Генерация mock JWT токена

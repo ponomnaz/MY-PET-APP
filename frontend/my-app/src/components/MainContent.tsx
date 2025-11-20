@@ -6,12 +6,18 @@ interface User {
 
 interface MainContentProps {
   user: User | null;
+  backgroundColor: string;
+  accountPanelOpacity: number;
+  accountPanelTopOffset: number;
 }
 
-const MainContent = ({ user }: MainContentProps) => {
+const MainContent = ({ user, backgroundColor, accountPanelOpacity, accountPanelTopOffset }: MainContentProps) => {
   if (!user) {
     return (
-      <main className="flex-1 p-8 overflow-auto">
+      <main 
+        className="flex-1 p-8 overflow-auto transition-colors duration-300"
+        style={{ backgroundColor }}
+      >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-gray-800">
             Загрузка...
@@ -22,13 +28,22 @@ const MainContent = ({ user }: MainContentProps) => {
   }
 
   return (
-    <main className="flex-1 p-8 overflow-auto">
+    <main 
+      className="flex-1 p-8 overflow-auto transition-colors duration-300"
+      style={{ backgroundColor }}
+    >
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           Добро пожаловать, {user.name}!
         </h2>
         
-        <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-6">
+        <div 
+          className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-6 transition-all duration-300"
+          style={{ 
+            opacity: accountPanelOpacity / 100,
+            transform: `translateY(${accountPanelTopOffset}px)`
+          }}
+        >
           <h3 className="text-xl font-semibold text-gray-800 mb-4">
             Информация об аккаунте
           </h3>
@@ -61,14 +76,6 @@ const MainContent = ({ user }: MainContentProps) => {
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mt-6">
-          <h3 className="font-semibold text-blue-800 mb-2">Особенности:</h3>
-          <ul className="list-disc list-inside text-blue-700 space-y-1">
-            <li>Скрываемая боковая панель</li>
-            <li>Отображение информации об аккаунте</li>
-          </ul>
         </div>
       </div>
     </main>

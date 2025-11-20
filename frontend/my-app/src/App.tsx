@@ -17,6 +17,9 @@ function App() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
   const [user, setUser] = useState<User | null>(() => getCurrentUser());
+  const [mainWindowColor, setMainWindowColor] = useState<string>('#ffffff');
+  const [accountPanelOpacity, setAccountPanelOpacity] = useState<number>(100);
+  const [accountPanelTopOffset, setAccountPanelTopOffset] = useState<number>(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,10 +69,21 @@ function App() {
         <Sidebar
           isOpen={isSidebarOpen || isLargeScreen}
           onClose={() => setIsSidebarOpen(false)}
+          onColorChange={setMainWindowColor}
+          currentColor={mainWindowColor}
+          onOpacityChange={setAccountPanelOpacity}
+          currentOpacity={accountPanelOpacity}
+          onTopOffsetChange={setAccountPanelTopOffset}
+          currentTopOffset={accountPanelTopOffset}
         />
         
         <div className="flex flex-col flex-1">
-          <MainContent user={user} />
+          <MainContent 
+            user={user} 
+            backgroundColor={mainWindowColor} 
+            accountPanelOpacity={accountPanelOpacity}
+            accountPanelTopOffset={accountPanelTopOffset}
+          />
           <Footer />
         </div>
       </div>

@@ -9,9 +9,10 @@ interface MainContentProps {
   backgroundColor: string;
   accountPanelOpacity: number;
   accountPanelTopOffset: number;
+  customFont: string;
 }
 
-const MainContent = ({ user, backgroundColor, accountPanelOpacity, accountPanelTopOffset }: MainContentProps) => {
+const MainContent = ({ user, backgroundColor, accountPanelOpacity, accountPanelTopOffset, customFont }: MainContentProps) => {
   if (!user) {
     return (
       <main 
@@ -41,7 +42,8 @@ const MainContent = ({ user, backgroundColor, accountPanelOpacity, accountPanelT
           className="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-6 transition-all duration-300"
           style={{ 
             opacity: accountPanelOpacity / 100,
-            transform: `translateY(${accountPanelTopOffset}px)`
+            transform: `translateY(${accountPanelTopOffset}px)`,
+            fontFamily: customFont
           }}
         >
           <h3 className="text-xl font-semibold text-gray-800 mb-4">

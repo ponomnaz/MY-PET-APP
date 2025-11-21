@@ -16,10 +16,16 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
-  const [user, setUser] = useState<User | null>(() => getCurrentUser());
+  const [user, setUser] = useState<User | null>(() => {
+    if (isAuthenticated()) {
+      return getCurrentUser();
+    }
+    return null;
+  });
   const [mainWindowColor, setMainWindowColor] = useState<string>('#ffffff');
   const [accountPanelOpacity, setAccountPanelOpacity] = useState<number>(100);
   const [accountPanelTopOffset, setAccountPanelTopOffset] = useState<number>(0);
+  const [customFont, setCustomFont] = useState<string>('system-ui');
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,16 +45,6 @@ function App() {
     setUser(userData);
     setIsLoggedIn(true);
   };
-
-  // Update user when component mounts if already logged in
-  useEffect(() => {
-    if (isLoggedIn && !user) {
-      const currentUser = getCurrentUser();
-      if (currentUser) {
-        setUser(currentUser);
-      }
-    }
-  }, [isLoggedIn, user]);
 
   if (!isLoggedIn) {
     return <Login onLoginSuccess={handleLoginSuccess} />;
@@ -75,6 +71,8 @@ function App() {
           currentOpacity={accountPanelOpacity}
           onTopOffsetChange={setAccountPanelTopOffset}
           currentTopOffset={accountPanelTopOffset}
+          onFontChange={setCustomFont}
+          currentFont={customFont}
         />
         
         <div className="flex flex-col flex-1">
@@ -83,6 +81,7 @@ function App() {
             backgroundColor={mainWindowColor} 
             accountPanelOpacity={accountPanelOpacity}
             accountPanelTopOffset={accountPanelTopOffset}
+            customFont={customFont}
           />
           <Footer />
         </div>

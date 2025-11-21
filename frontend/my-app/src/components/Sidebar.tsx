@@ -10,12 +10,15 @@ interface SidebarProps {
   currentOpacity: number;
   onTopOffsetChange: (offset: number) => void;
   currentTopOffset: number;
+  onFontChange: (font: string) => void;
+  currentFont: string;
 }
 
-const Sidebar = ({ isOpen, onClose, onColorChange, currentColor, onOpacityChange, currentOpacity, onTopOffsetChange, currentTopOffset }: SidebarProps) => {
+const Sidebar = ({ isOpen, onClose, onColorChange, currentColor, onOpacityChange, currentOpacity, onTopOffsetChange, currentTopOffset, onFontChange, currentFont }: SidebarProps) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showOpacitySlider, setShowOpacitySlider] = useState(false);
   const [showPositionSlider, setShowPositionSlider] = useState(false);
+  const [showFontPicker, setShowFontPicker] = useState(false);
   return (
     <>
       {/* Overlay для мобильных устройств */}
@@ -47,9 +50,46 @@ const Sidebar = ({ isOpen, onClose, onColorChange, currentColor, onOpacityChange
         <nav>
           <ul className="space-y-3">
             <li>
-              <a href="#" className="block hover:bg-gray-700 p-2 rounded">
+              <button
+                onClick={() => setShowFontPicker(!showFontPicker)}
+                className="w-full text-left block hover:bg-gray-700 p-2 rounded"
+              >
                 Изменить шрифт
-              </a>
+              </button>
+              {showFontPicker && (
+                <div className="mt-2 ml-4 p-3 bg-gray-700 rounded">
+                  <label className="block text-sm font-semibold mb-2">Выберите шрифт:</label>
+                  <select
+                    value={currentFont}
+                    onChange={e => {
+                      onFontChange(e.target.value);
+                    }}
+                    className="w-full rounded p-2 bg-gray-600 text-white text-sm focus:outline-none"
+                    style={{fontFamily: currentFont}}
+                  >
+                    <option value="system-ui" style={{fontFamily: 'system-ui'}}>Системный (по умолчанию)</option>
+                    <option value="'Roboto', sans-serif" style={{fontFamily: 'Roboto, sans-serif'}}>Roboto</option>
+                    <option value="'Fira Mono', monospace" style={{fontFamily: 'Fira Mono, monospace'}}>Fira Mono</option>
+                    <option value="'Arial', sans-serif" style={{fontFamily: 'Arial, sans-serif'}}>Arial</option>
+                    <option value="'Georgia', serif" style={{fontFamily: 'Georgia, serif'}}>Georgia</option>
+                    <option value="'Comic Sans MS', cursive" style={{fontFamily: 'Comic Sans MS, cursive'}}>Comic Sans MS</option>
+                  </select>
+                  <div className="flex justify-between mt-2">
+                    <button
+                      className="px-3 py-1 text-sm bg-gray-600 rounded hover:bg-gray-500"
+                      onClick={() => setShowFontPicker(false)}
+                    >OK</button>
+                    <button
+                      className="px-3 py-1 text-sm bg-gray-600 rounded hover:bg-gray-500"
+                      title="Сбросить шрифт"
+                      onClick={() => {
+                        onFontChange('system-ui');
+                        setShowFontPicker(false);
+                      }}
+                    >↺ Сбросить</button>
+                  </div>
+                </div>
+              )}
             </li>
             <li>
               <button
